@@ -1,0 +1,60 @@
+
+================= C ====================
+
+1) Entender el problema. Abrir el .h para ver bien la estructura de pago_t.
+    Este ejercicio no lo pide pero igualmente ahora lo hacemos: Analizemos el struct pago_t y
+    calculemos cada size y offset de sus miembros.
+
+2) Primero resolvemos la funcion en C.
+
+
+Preguntar por que hace falta que nos den el tamano cuando nos pasan un array.
+
+Para el uint8_t en_blacklist(char* comercio, char** lista_comercios, uint8_t n):
+
+ Primero hacerlo comparando de una los strings, tipo:
+    if (comercio_i == comercio) { }
+    Y preguntar por que esta mal
+
+    man strcmp : para ver como funciona, que retorna.
+
+
+Para el de blacklistComercios(), son muchos parametros, pero ver que simplemente son dos arrays con sus respectivos tamanos.
+
+No tenerle miedo a los dobles punteros. Entender por que son necesarios tanto
+ -Para el parametro (arr_comercios es una lista de strings,
+los strings son char* y el array en si termina siendo un *, asique todo sera un **)
+
+ -Como para el valor de retorno: Debemos devolver un array de punteros, por lo que necesariamente sera un **.
+
+
+Tambien hacemos blacklistComercios_V2 pero solo en C. Para mostrar la idea nada mas.
+
+
+================= ASM =================
+
+El primero lo hacemos en vivo todos juntos. PERO con el error de los tamanos,
+llevarlos a resolverlo asi y despues debuggeamos.
+
+El segundo lo doy hecho pero con errores y debuggeamos en vivo.
+
+El tercero todo hecho (pero mostrarlo de a pedazos).
+
+
+1) Primero definir todos los defines que hagan falta:
+    - offsets
+    - sizes (ademas de los structs, cada sizeof de C podria ser un define)
+    - null
+    etc
+
+ Que exportamos y que importamos.
+
+2) Para cada funcion escribir en comentario arriba el prototipo de la funcion, 
+ y principalmente ya escribir por cual registro nos viene cada parametro.
+
+3) Armar stackframe
+
+
+
+// PARA DEBUGGEAR : ensuciar RCX antes de llamar a la funcion, asi si estan usandolo para un ciclo, se tiene
+que limpiar siosi.

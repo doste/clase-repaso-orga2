@@ -1,0 +1,49 @@
+
+;uint32_t* acumuladoPorCliente(uint8_t cantidadDePagos, pago_t* arr_pagos)
+; RDI -> cantidadDePagos . RSI -> arr_pagos
+acumuladoPorCliente_asm:
+	push rbp
+	mov rbp, rsp
+
+	push r12
+	push r13
+	push r15
+
+	mov r12, rdi		; r12 <- cantidadDePagos
+	mov r13, rsi		; r13 <- arr_pagos
+
+	mov rdi, 10
+	mov rsi, SIZE_UIN32_T
+	call calloc
+
+	;mov r14, rax		; r14 <- pagos_aprobados
+
+	xor r15, r15  		; a r15 lo usaremos para guardarnos el pago_i.cliente
+	xor rdi, rdi		; a rdi lo usaremos para el pago_i.monto
+
+	xor rcx, rcx 		; inicializamos iterador ciclo en 0
+
+	.ciclo:
+		cmp rcx, r12
+		jge .finCiclo
+
+		cmp byte [r13 + offset_aprobado], 1 ; if (pago_i.aprobado == 1)
+		jne .proxIteracion
+
+		mov r15b, [r13 + offset_cliente] 	; r15b <- pago_i.cliente
+		mov dil, [r13 + offset_monto]		; dil <- pago_i.monto
+
+		add [rax + r15 * SIZE_UIN32_T], dil	; directamente vamos trabajando con el rax
+
+		.proxIteracion:
+		inc rcx
+		add r13, SIZE_PAGO_T
+		jmp .ciclo
+
+	.finCiclo:
+
+	pop r15
+	pop r13
+	pop r12
+	pop rbp
+	ret
